@@ -1,10 +1,16 @@
 import discord
 import os
 from dotenv import load_dotenv
+load_dotenv()
 
 from keanu.client import WarflowerClient
 
-load_dotenv()
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
 
 warflower_client = WarflowerClient()
 
@@ -18,12 +24,14 @@ async def on_message(message):
     return
 
   if message.content.startswith('keanu'):
+    print("REQUEST DETECTED")
     terms = message.content.split()
     if len(terms) == 2 and terms[1].lower() == "list":
-      return warflower_client.list_configs()
+      msg = "Here are your available servers:"
+      cfgs = warflower_client.list_configs()
+      for c in cfgs:
+        status = "*[ACTIVE]*" if cfgs[c] else ""
+        msg = msg + f"\n\t- {c} " + status
+      await message.channel.send(msg)
 
-if __name__ == "__main__":
-  intents = discord.Intents.default()
-  intents.message_content = True
-
-  client = discord.Client(intents=intents)
+client.run(os.environ["DISCORD_TOKEN"])

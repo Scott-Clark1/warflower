@@ -14,5 +14,5 @@ class DockerManager:
       else:
         c.stop()
 
-  def start(self, image, name, **kwargs):
-    self.client.run(image, name=name, **kwargs)
+  def start(self, image, command, name, **kwargs):
+    self.client.run(image, command, name=name, **kwargs)

@@ -1,5 +1,6 @@
 valheim_server_0:
   image: mbround18/valheim:latest
+  command: null
   runtime_args:
     ports:
       - 2456:2456/udp
