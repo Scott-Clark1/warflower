@@ -1,5 +1,6 @@
 import os
 import yaml
+import sys
 
 from warflower.docker import DockerManager
 from warflower.util import to_serverid
@@ -32,15 +33,21 @@ class ServerManager:
 
 
   def start_server(self, serverid, rt_args={}):
+    print("TRYING TO START: " + serverid, file=sys.stdout)
     cfg = self.all_servers[serverid]
 
     rt_args = {**cfg["runtime_args"], **rt_args}
-    self.active_servers.append(serverid)
+    self.active_servers[serverid] = {}
 
-    return self.docker_mgmt.start(cfg["image"], cfg["command"], to_serverid(game, preset)) # , **rt_args)
+    print("OK, TRYING THIS SHIT OUT!", file=sys.stdout)
+    print(cfg["image"], cfg["command"], serverid, file=sys.stdout)
+    self.docker_mgmt.start(cfg["image"], cfg["command"], serverid) # , **rt_args)
+    return True
 
   def stop_server(self, serverid=None):
-    return self.docker_mgmt.stop(to_serverid(game, preset))
+    self.docker_mgmt.stop(serverid)
+    self.active_servers.pop(serverid, None)
+    return True
 
     
 

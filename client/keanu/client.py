@@ -9,17 +9,23 @@ class WarflowerClient:
     self.req = requests.Session()
     self.headers = {"Authorization": f"Bearer {os.environ['WARFLOWER_TOKEN']}"}
 
-  def _make_request(self, endpoint, **kwargs):
+  def _post(self, endpoint, **kwargs):
+    res = self.req.post(f"http://{self.host}:{self.port}/{endpoint}", headers=self.headers, **kwargs)
+    if res.ok:
+      return res.text
+    raise ValueError(res.reason)
+
+  def _get(self, endpoint, **kwargs):
     res = self.req.get(f"http://{self.host}:{self.port}/{endpoint}", headers=self.headers, **kwargs)
     if res.ok:
       return res.text
     raise ValueError(res.reason)
 
   def list_configs(self):
-    res = json.loads(self._make_request("list"))
-    return res
+    return json.loads(self._get("list"))["data"]
 
   def start_server(self, serverid):
-    objs = {"serverid" : serverid}
-    res = json.loads(self._make_request("start", json=objs))
-    return res
+    return json.loads(self._post(f"start/{serverid}"))["ok"]
+
+  def stop_server(self, serverid):
+    return json.loads(self._post(f"stop/{serverid}"))["ok"]

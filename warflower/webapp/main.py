@@ -29,13 +29,24 @@ def hello_world():
 @app.route('/list')
 @auth.login_required
 def list_configs():
-  return jsonify(mgmt.list_configs())
+  return jsonify({"status" : 200, "data" : mgmt.list_configs()})
 
 
-@app.route('/start')
+@app.route('/start/<serverid>', methods=['POST'])
 @auth.login_required
 def start_server(serverid):
-  return mgmt.start_server(serverid)
+  res = mgmt.start_server(serverid)
+  if res:
+    return jsonify({"status" : 200, "ok" : True})
+  return jsonify({"status" : 500, "ok" : False})
+
+@app.route('/stop/<serverid>', methods=['POST'])
+@auth.login_required
+def stop_server(serverid):
+  res = mgmt.stop_server(serverid)
+  if res:
+    return jsonify({"status" : 200, "ok" : True})
+  return jsonify({"status" : 500, "ok" : False})
 
 
 if __name__ == '__main__':
