@@ -47,7 +47,7 @@ async def on_message(message):
       cfgs = warflower_client.list_configs()
       for c in cfgs:
         status = "[**ACTIVE**]" if cfgs[c] else ""
-        msg = msg + f"\n\t- {c} " + status
+        msg += f"\n- {c} {status}"
       await message.channel.send(msg)
 
     # START SERVER
@@ -67,10 +67,10 @@ async def on_message(message):
       else:
         await message.channel.send("FAILURE")
     else:
-      msg = """Currently suppported commands:
-            \t- `keanu list`: list available server configurations
-            \t- `keanu start {serverid}`: start up a game server based off a config ID
-            \t- `keanu stop {serverid}`: stop a game server based off a config ID"""
+      msg = """Currently suppported commands:  
+            - `keanu list`: list available server configurations  
+            - `keanu start {serverid}`: start up a game server based off a config ID  
+            - `keanu stop {serverid}`: stop a game server based off a config ID"""
       await message.channel.send(msg)
 
 client.run(os.environ["DISCORD_TOKEN"], log_handler=handler, log_level=logging.INFO)
