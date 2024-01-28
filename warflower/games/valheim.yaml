@@ -1,0 +1,27 @@
+valheim_server_0:
+  image: mbround18/valheim:latest
+  runtime_args:
+    ports:
+      - 2456:2456/udp
+      - 2457:2457/udp
+      - 2458:2458/udp
+    environment:
+      PORT: 2456
+      NAME: "WhoUpVallinTheyHeim"
+      WORLD: "vikecord"
+      PASSWORD: "vikey"
+      TZ: America/Chicago
+      PUBLIC: 0
+      UPDATE_ON_STARTUP: 1
+      AUTO_UPDATE: 1
+      AUTO_UPDATE_SCHEDULE: "0 1 * * *"
+      AUTO_BACKUP: 1
+      AUTO_BACKUP_SCHEDULE: "*/15 * * * *"
+      AUTO_BACKUP_REMOVE_OLD: 1
+      AUTO_BACKUP_DAYS_TO_LIVE: 3
+      AUTO_BACKUP_ON_UPDATE: 1
+      AUTO_BACKUP_ON_SHUTDOWN: 1
+      MODIFIERS: "portals=casual,deathpenalty=veryeasy"
+    volumes:
+    - /home/ubuntu/valheim/worldsaves:/home/steam/.config/unity3d/IronGate/Valheim
+    - /home/ubuntu/valheim/valheim-data:/home/steam/valheim
