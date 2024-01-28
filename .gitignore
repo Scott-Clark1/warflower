@@ -2,3 +2,4 @@
 *.swp
 *.secret.*
 .env
+__pycache__

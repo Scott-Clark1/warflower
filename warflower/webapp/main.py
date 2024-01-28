@@ -1,6 +1,11 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_httpauth import HTTPTokenAuth
 import yaml
+
+from warflower.controller import ServerManager
+
+
+mgmt = ServerManager()
 
 app = Flask(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
@@ -16,6 +21,12 @@ def verify_token(token):
 @auth.login_required
 def hello_world():
 	return "Hello, {}!".format(auth.current_user())
+
+
+@app.route('/list')
+@auth.login_required
+def list_configs():
+	return jsonify({mgmt.list_configs()})
 
 
 

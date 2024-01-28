@@ -11,6 +11,9 @@ class ServerManager:
 
     self.docker_mgmt = DockerManager()
 
+  def list_configs(self):
+    return self.all_servers
+
   def start_server(self, game, preset=None, rt_args={}):
     game_configs = self.all_servers[game]
     if not preset:
