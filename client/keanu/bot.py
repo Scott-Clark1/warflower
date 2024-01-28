@@ -12,7 +12,7 @@ logger = logging.getLogger('discord')
 # handler = logging.StreamHandler(stream=sys.stdout)
 
 
-admins = ["scottdoc", "john3361"]
+admins = ["scottdoc", "john3361", "_booze_bus"]
 
 intents = discord.Intents.default()
 intents.message_content = True
