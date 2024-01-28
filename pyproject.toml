@@ -11,6 +11,7 @@ python = "^3.8"
 docker = "^7.0.0"
 pyyaml = "^6.0.1"
 flask = "^3.0.1"
+flask-httpauth = "^4.8.0"
 
 
 [build-system]
