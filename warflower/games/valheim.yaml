@@ -1,4 +1,4 @@
-basic_server:
+0:
   image: mbround18/valheim:latest
   command: null
   runtime_args:
