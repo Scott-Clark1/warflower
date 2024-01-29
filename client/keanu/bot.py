@@ -9,10 +9,8 @@ from keanu.client import WarflowerClient
 load_dotenv()
 handler = logging.FileHandler(filename='/home/ubuntu/logs/discord.log', encoding='utf-8', mode='w+')
 logger = logging.getLogger('discord')
-# handler = logging.StreamHandler(stream=sys.stdout)
 
-
-admins = ["scottdoc", "john3361", "_booze_bus"]
+admins = os.environ["ADMINS"].split(',')
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -63,7 +61,7 @@ async def on_message(message):
     elif terms[1].lower() == "stop":
       res = warflower_client.stop_server(terms[2])
       if res:
-        await message.channel.send("It's gotta go down. It's gotta be that way.")
+        await message.channel.send(f"`{terms[2]}`'s gotta go down. It's gotta be that way.")
       else:
         await message.channel.send("Unhandled exception")
     else:

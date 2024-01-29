@@ -3,9 +3,9 @@ basic_server:
   command: null
   runtime_args:
     ports:
-      2456: 2456/udp
-      2457: 2457/udp
-      2458: 2458/udp
+      2456/udp: 2456
+      2457/udp: 2457
+      2458/udp: 2458
     environment:
       PORT: 2456
       NAME: "WhoUpVallinTheyHeim"
