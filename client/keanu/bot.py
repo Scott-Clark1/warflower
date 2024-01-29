@@ -40,7 +40,7 @@ async def on_message(message):
 
     # LIST GAMES
     if len(terms) == 2 and terms[1].lower() == "list":
-      msg = "Here are your available servers:\n```diff"
+      msg = "Here are your available server configurations (+ means active, - means offline):\n```diff"
       cfgs = warflower_client.list_configs()
       for c in cfgs:
         status = "+ " if cfgs.get(c, 0) else "- "
@@ -67,8 +67,8 @@ async def on_message(message):
     else:
       msg = """Currently suppported commands:  
             - `keanu list`: list available server configurations  
-            - `keanu start {serverid}`: start up a game server based off a config ID  
-            - `keanu stop {serverid}`: stop a game server based off a config ID"""
+            - `keanu start {config}`: start up a game server based off a config  
+            - `keanu stop {config}`: stop a game server based off a config"""
       await message.channel.send(msg)
 
 client.run(os.environ["DISCORD_TOKEN"], log_handler=handler, log_level=logging.INFO)

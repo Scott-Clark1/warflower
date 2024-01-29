@@ -15,6 +15,9 @@ class ServerManager:
 
     self.docker_mgmt = DockerManager()
     self.active_servers = {}
+    for s in self.docker_mgmt.list():
+      if s["name"] in self.all_servers:
+        self.active_servers[s["name"]] = {}
 
   def load_configs(self):
     currdir = os.path.dirname(__file__)
@@ -53,19 +56,23 @@ class ServerManager:
     rt_args = {**cfg["runtime_args"]} # , **rt_args}
     self.active_servers[serverid] = {}
 
-    logger.info("OK, TRYING THIS SHIT OUT!")
+    logger.info(f"Launching {serverid} with these rtargs:")
     logger.info(f"{cfg['image']}, {cfg['command']}, {serverid}")
     logger.error(f"{rt_args}")
-    self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
-    return True
+    return self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
 
   def stop_server(self, serverid=None):
     logger.info("Shutting down " + serverid)
     self.load_configs()
 
-    self.docker_mgmt.stop(serverid)
-    self.active_servers.pop(serverid, None)
-    return True
+    res = self.docker_mgmt.stop(serverid)
+    if res:
+      if serverid:
+        self.active_servers.pop(serverid, None)
+      else:
+        self.active_servers = {}
+
+    return res
 
 
 if __name__ == "__main__":

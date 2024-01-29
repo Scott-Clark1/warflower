@@ -31,11 +31,6 @@ def verify_token(token):
   if token in secrets:
     return secrets[token]["name"]
 
-@app.route('/test')
-@auth.login_required
-def hello_world():
-  return "Hello, {}!".format(auth.current_user())
-
 
 @app.route('/list')
 @auth.login_required
