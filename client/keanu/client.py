@@ -21,6 +21,9 @@ class WarflowerClient:
       return res.text
     raise ValueError(res.reason)
 
+  def list_games(self):
+    return {g : 1 for g in json.loads(self._get("list?g=games"))["data"]}
+
   def list_configs(self):
     return json.loads(self._get("list"))["data"]
 

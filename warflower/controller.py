@@ -13,6 +13,7 @@ class ServerManager:
     self.docker_mgmt = DockerManager()
 
     self.all_servers = {}
+    self.games = []
     self.load_configs()
     self._refresh_active_servers()
 
@@ -27,8 +28,8 @@ class ServerManager:
 
     all_servers = {}
     gamesdir = os.path.join(currdir, "games")
-    games = os.listdir(gamesdir)
-    for game in games:
+    self.games = os.listdir(gamesdir)
+    for game in self.games:
       if game[-5:] != ".yaml":
         continue
       gamecfgs = yaml.safe_load(open(os.path.join(gamesdir, game)))
@@ -50,6 +51,11 @@ class ServerManager:
       else:
         res[serv] = 0
     return res
+
+  def list_games(self):
+    self.load_configs()
+
+    return [x.split(".")[0] for x in self.games]
 
 
   def start_server(self, serverid, rt_args={}):

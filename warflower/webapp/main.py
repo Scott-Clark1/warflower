@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_httpauth import HTTPTokenAuth
 import os
 import yaml
@@ -35,7 +35,15 @@ def verify_token(token):
 @app.route('/list')
 @auth.login_required
 def list_configs():
-  return jsonify({"status" : 200, "data" : MGMT.list_configs()})
+  granularity = request.args.get('g', 'configs')
+
+  if granularity == 'configs':
+    return jsonify({"status" : 200, "data" : MGMT.list_configs()})
+  elif granularity == 'games':
+    return jsonify({"status" : 200, "data" : MGMT.list_games()})
+  else:
+    return jsonify({"status" : 400})
+
 
 
 @app.route('/start/<serverid>', methods=['POST'])

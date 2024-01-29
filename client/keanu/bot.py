@@ -29,27 +29,40 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if message.content.startswith('keanu'):
+  message_str = message.content.lower()
+  if message_str.startswith('keanu'):
     author = message.author.name
     logger.info(f"REQUEST DETECTED FROM {author}")
     if author not in admins:
       return await message.channel.send(f"Permissions not found for {author}")
 
     # logging.info(message.global_name)
-    terms = message.content.lower().split()
+    terms = message_str.split()
+
+    cmd = terms[1]
 
     # LIST GAMES
-    if len(terms) == 2 and terms[1].lower() == "list":
-      msg = "Here are your available server configurations (+ means active, - means offline):\n```diff"
-      cfgs = warflower_client.list_configs()
-      for c in cfgs:
-        status = "+ " if cfgs.get(c, 0) else "- "
-        msg += f"\n{status} {c}"
-      msg += "```"
+    if cmd == "list" or cmd == "status":
+      if len(terms) < 3 or terms[2] == "configs":
+        msg = "Here are your available server configurations (+ means active, - means offline):\n```diff"
+        cfgs = warflower_client.list_configs()
+        for c in cfgs:
+          status = "+ " if cfgs.get(c, 0) else "- "
+          msg += f"\n{status} {c}"
+        msg += "```"
+      elif terms[2] == "games":
+        msg = "Here are your available games: ```"
+        cfgs = warflower_client.list_games()
+        for c in cfgs:
+          msg += f"\n{c}"
+        msg += "```"
+      else:
+        return await message.channel.send("What?")
       await message.channel.send(msg)
 
     # START SERVER
-    elif terms[1].lower() == "start":
+    elif cmd == "start":
+      await message.channel.send("Lookin into it")
       res = warflower_client.start_server(terms[2])
 
       if res:
@@ -58,7 +71,8 @@ async def on_message(message):
         await message.channel.send("Unhandled exception")
 
     # START SERVER
-    elif terms[1].lower() == "stop":
+    elif cmd == "stop":
+      await message.channel.send("Lookin into it")
       res = warflower_client.stop_server(terms[2])
       if res:
         await message.channel.send(f"`{terms[2]}`'s gotta go down. It's gotta be that way.")
