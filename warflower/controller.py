@@ -14,9 +14,9 @@ class ServerManager:
 
     self.all_servers = {}
     self.load_configs()
-    self.refresh_active_servers()
+    self._refresh_active_servers()
 
-  def refresh_active_servers(self):
+  def _refresh_active_servers(self):
     self.active_servers = {}
     for s in self.docker_mgmt.list():
       if s["name"] in self.all_servers:
@@ -43,7 +43,7 @@ class ServerManager:
     servers = self.all_servers
     res = {}
 
-    self.refresh_active_servers()
+    self._refresh_active_servers()
     for serv in servers:
       if serv in self.active_servers:
         res[serv] = 1
