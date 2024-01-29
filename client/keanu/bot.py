@@ -43,11 +43,12 @@ async def on_message(message):
 
     # LIST GAMES
     if len(terms) == 2 and terms[1].lower() == "list":
-      msg = "Here are your available servers:"
+      msg = "Here are your available servers:\n```diff"
       cfgs = warflower_client.list_configs()
       for c in cfgs:
-        status = "[**ACTIVE**]" if cfgs[c] else ""
-        msg += f"\n- {c} {status}"
+        status = "+ " if cfgs.get(c, 0) else "- "
+        msg += f"\n{status} {c}"
+      msg += "```"
       await message.channel.send(msg)
 
     # START SERVER
