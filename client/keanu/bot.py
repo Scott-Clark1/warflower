@@ -31,12 +31,11 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  author = message.author.name
-  logger.info(f"REQUEST DETECTED FROM {author}")
-  if author not in admins:
-    return await message.channel.send(f"Permissions not found for {author}")
-
   if message.content.startswith('keanu'):
+    author = message.author.name
+    logger.info(f"REQUEST DETECTED FROM {author}")
+    if author not in admins:
+      return await message.channel.send(f"Permissions not found for {author}")
 
     # logging.info(message.global_name)
     terms = message.content.split()
@@ -56,17 +55,17 @@ async def on_message(message):
       res = warflower_client.start_server(terms[2])
 
       if res:
-        await message.channel.send("Success!")
+        await message.channel.send(f"`{terms[2]}`: I'm thinkin I'm back!")
       else:
-        await message.channel.send("FAILURE")
+        await message.channel.send("Unhandled exception")
 
     # START SERVER
     elif terms[1].lower() == "stop":
       res = warflower_client.stop_server(terms[2])
       if res:
-        await message.channel.send("Success!")
+        await message.channel.send("It's gotta go down. It's gotta be that way.")
       else:
-        await message.channel.send("FAILURE")
+        await message.channel.send("Unhandled exception")
     else:
       msg = """Currently suppported commands:  
             - `keanu list`: list available server configurations  
