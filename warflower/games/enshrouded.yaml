@@ -3,11 +3,12 @@ basic_server:
   command: null
   runtime_args:
     ports:
-      - 15636:15636/udp 
-      - 15637:15637/udp 
+      15636/udp: 15636
+      15637/udp: 15637
     environment:
-      SERVER_NAME: "BOYSERVER"
+      SERVER_NAME: "Legalize Nuclear Bombs"
       SERVER_PASSWORD: "nuke"
       SERVER_SLOTS: 16
     volumes:
-    - /home/ubuntu/enshrouded/basic:/home/steam/enshrouded/savegame
+      - "/home/ubuntu/enshrouded/basic:/home/steam/enshrouded/savegame"
+
