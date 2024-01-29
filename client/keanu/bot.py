@@ -36,7 +36,7 @@ async def on_message(message):
       return await message.channel.send(f"Permissions not found for {author}")
 
     # logging.info(message.global_name)
-    terms = message.content.split()
+    terms = message.content.lower().split()
 
     # LIST GAMES
     if len(terms) == 2 and terms[1].lower() == "list":
