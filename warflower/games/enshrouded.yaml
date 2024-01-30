@@ -10,5 +10,5 @@
       SERVER_PASSWORD: "nuke"
       SERVER_SLOTS: 16
     volumes:
-      - "/home/ubuntu/enshrouded/basic:/home/steam/enshrouded/savegame"
+      - "/home/warflower/games/enshrouded/server_0:/home/steam/enshrouded/savegame"
 

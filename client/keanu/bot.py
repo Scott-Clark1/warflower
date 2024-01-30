@@ -7,7 +7,7 @@ import discord
 from keanu.client import WarflowerClient
 
 load_dotenv()
-handler = logging.FileHandler(filename='/home/ubuntu/logs/discord.log', encoding='utf-8', mode='w+')
+handler = logging.FileHandler(filename='/home/warflower/logs/discord.log', encoding='utf-8', mode='w+')
 logger = logging.getLogger('discord')
 
 admins = os.environ["ADMINS"].split(',')

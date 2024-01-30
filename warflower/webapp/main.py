@@ -10,7 +10,7 @@ from warflower.controller import ServerManager
 
 app = Flask("webapp")
 
-file_handler = logging.FileHandler('/home/ubuntu/logs/flask.log', encoding='utf-8', mode='w+')
+file_handler = logging.FileHandler('/home/warflower/logs/flask.log', encoding='utf-8', mode='w+')
 file_handler.setLevel(logging.INFO)
 app.logger.addHandler(file_handler)
 app.logger.setLevel(logging.INFO)

@@ -24,5 +24,5 @@
       AUTO_BACKUP_ON_SHUTDOWN: 1
       MODIFIERS: "portals=casual,deathpenalty=veryeasy"
     volumes:
-    - /home/ubuntu/valheim/worldsaves:/home/steam/.config/unity3d/IronGate/Valheim
-    - /home/ubuntu/valheim/valheim-data:/home/steam/valheim
+    - /home/warflower/games/valheim/server_0/worldsaves:/home/steam/.config/unity3d/IronGate/Valheim
+    - /home/warflower/games/valheim/server_0/valheim-data:/home/steam/valheim
