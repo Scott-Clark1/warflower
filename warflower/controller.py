@@ -69,7 +69,7 @@ class ServerManager:
 
     logger.info(f"Launching {serverid} with these rtargs:")
     logger.info(f"{cfg['image']}, {cfg['command']}, {serverid}")
-    logger.error(f"{rt_args}")
+    logger.info(f"{rt_args}")
     return self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
 
   def stop_server(self, serverid=None):

@@ -2,6 +2,8 @@
   image: sknnr/enshrouded-dedicated-server:v2.0.4
   command: null
   runtime_args:
+    mem_limit: "16g"
+    cpuset_cpus: "4-7"
     ports:
       15636/udp: 15636
       15637/udp: 15637

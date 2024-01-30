@@ -2,6 +2,8 @@
   image: mbround18/valheim:latest
   command: null
   runtime_args:
+    mem_limit: "8g"
+    cpuset_cpus: "0-3"
     ports:
       2456/udp: 2456
       2457/udp: 2457
