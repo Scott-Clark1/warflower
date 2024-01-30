@@ -1,6 +1,6 @@
 # Warflower
 
-Containerized game server management, used to manage running dozens of games on one VPS and handle swapping between them.
+Containerized game server management, used to manage running dozens of games on one VPS / dedicated and handle swapping between them.
 
 ## Components
 
