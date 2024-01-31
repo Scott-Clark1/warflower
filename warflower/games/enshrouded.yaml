@@ -2,8 +2,8 @@
   image: sknnr/enshrouded-dedicated-server:v2.0.4
   command: null
   runtime_args:
-    mem_limit: "16g"
-    cpuset_cpus: "4-7"
+    mem_limit: "32g"
+    cpuset_cpus: "0-7"
     ports:
       15636/udp: 15636
       15637/udp: 15637
@@ -12,5 +12,5 @@
       SERVER_PASSWORD: "nuke"
       SERVER_SLOTS: 16
     volumes:
+      - "/home/warflower/games/enshrouded/global:/home/steam/enshrouded/"
       - "/home/warflower/games/enshrouded/server_0:/home/steam/enshrouded/savegame"
-
