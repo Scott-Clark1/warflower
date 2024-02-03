@@ -63,6 +63,14 @@ def stop_server(serverid):
   return jsonify({"status" : 500, "ok" : False})
 
 
+@app.route('/stats/<serverid>', methods=['POST'])
+@auth.login_required
+def server_stats(serverid):
+  res = MGMT.server_stats(serverid)
+  if res:
+    return jsonify({"status" : 200, "ok" : True, "data" : res})
+  return jsonify({"status" : 500, "ok" : False})
+
 if __name__ == '__main__':
   # starting app
   app.run(debug=True, host='0.0.0.0')

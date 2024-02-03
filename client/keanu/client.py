@@ -27,6 +27,9 @@ class WarflowerClient:
   def list_configs(self):
     return json.loads(self._get("list"))["data"]
 
+  def server_stats(self, serverid):
+    return json.loads(self._post(f"stats/{serverid}"))["data"]
+
   def start_server(self, serverid):
     return json.loads(self._post(f"start/{serverid}"))["ok"]
 

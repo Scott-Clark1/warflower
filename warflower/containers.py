@@ -11,21 +11,26 @@ class DockerManager:
       res.append({"name" : c.name})
     return res
 
-
-  def stop(self, container_name=None):
-    succ = False
+  def _get_container_by_name(self, container_name):
     containers = self.client.containers
     for c in containers.list():
       if container_name:
         if c.name == container_name:
-          c.stop()
-          succ = True
-      else:
+          return c
+    return None
+
+  def stop(self, container_name=None):
+    succ = False
+
+    container = self._get_container_by_name()
+    if container:
         c.stop()
-        succ = True
+    else:
+      for c in self.client.containers.list():
+        c.stop()
 
     containers.prune()
-    return succ
+    return True 
 
   def start(self, image, command, name, **kwargs):
     try:
@@ -34,3 +39,14 @@ class DockerManager:
       return False
 
     return True
+  
+  def stats(self, image_name=None):
+    container = self._get_container_by_name(image_name)
+    if container:
+      return container.stats(decode=None, stream=False)
+
+
+if __name__ == "__main__":
+  d = DockerManager()
+  import pdb; pdb.set_trace()
+  pass

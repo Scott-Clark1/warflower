@@ -67,10 +67,18 @@ async def on_message(message):
 
       if res:
         await message.channel.send(f"`{terms[2]}`: I'm thinkin I'm back!")
+
+    # SERVER STATS
+    elif cmd == "stats":
+      await message.channel.send("Lookin into it")
+      res = warflower_client.server_stats(terms[2])
+
+      if res:
+        await message.channel.send(f"`{terms[2]}`:\n```%.2f\tCPU\n%.2f\tMEM" % (res["cpu"], res["mem"]))
       else:
         await message.channel.send("Unhandled exception")
 
-    # START SERVER
+    # STOP SERVER
     elif cmd == "stop":
       await message.channel.send("Lookin into it")
       res = warflower_client.stop_server(terms[2])

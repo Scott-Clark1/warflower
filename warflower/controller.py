@@ -3,7 +3,7 @@ import os
 import sys
 import yaml
 
-from warflower.docker import DockerManager
+from warflower.containers import DockerManager
 from warflower.util import to_serverid
 
 logger = logging.getLogger("webapp")
@@ -71,6 +71,27 @@ class ServerManager:
     logger.info(f"{cfg['image']}, {cfg['command']}, {serverid}")
     logger.info(f"{rt_args}")
     return self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
+  
+  def server_stats(self, serverid):
+    self.load_configs()
+
+    logger.info(f"Grabbing stats for {serverid}:")
+    cfg = self.all_servers[serverid]
+
+    stats = self.docker_mgmt.stats(serverid)
+    cpu_usage = (stats['cpu_stats']['cpu_usage']['total_usage']
+                 - stats['precpu_stats']['cpu_usage']['total_usage'])
+    cpu_system = (stats['cpu_stats']['system_cpu_usage']                    
+                  - stats['precpu_stats']['system_cpu_usage'])
+    num_cpus = stats['cpu_stats']["online_cpus"]
+    cpu_perc = (cpu_usage / cpu_system) * num_cpus * 100
+    
+    ret_stats = {
+      "cpu" : cpu_perc,
+      "mem" : stats["memory_stats"]["usage"] / stats["memory_stats"]["limit"]
+    }
+    return ret_stats
+
 
   def stop_server(self, serverid=None):
     logger.info("Shutting down " + serverid)
