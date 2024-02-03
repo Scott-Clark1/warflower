@@ -20,14 +20,15 @@ class DockerManager:
     return None
 
   def stop(self, container_name=None):
-    succ = False
+    containers = self.client.containers
 
-    container = self._get_container_by_name()
-    if container:
-        c.stop()
+    if container_name:
+        container = self._get_container_by_name(container_name)
+        if container:
+            container.stop()
     else:
-      for c in self.client.containers.list():
-        c.stop()
+      for container in containers.list():
+        container.stop()
 
     containers.prune()
     return True 
