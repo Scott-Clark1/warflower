@@ -70,11 +70,10 @@ async def on_message(message):
 
     # SERVER STATS
     elif cmd == "stats":
-      await message.channel.send("Lookin into it")
       res = warflower_client.server_stats(terms[2])
 
       if res:
-        await message.channel.send(f"`{terms[2]}`:\n```%.2f\tCPU\n%.2f\tMEM" % (res["cpu"], res["mem"]))
+        await message.channel.send(f"Usage stats for `{terms[2]}`:\n\n```CPU\t%6.2f%%\nMEM\t%6.2f%%```" % (res["cpu"], res["mem"]))
       else:
         await message.channel.send("Unhandled exception")
 
@@ -90,6 +89,7 @@ async def on_message(message):
       msg = """Currently suppported commands:  
             - `keanu list`: list available server configurations  
             - `keanu start {config}`: start up a game server based off a config  
+            - `keanu stats {config}`: CPU / memory usage statistics for a running server
             - `keanu stop {config}`: stop a game server based off a config"""
       await message.channel.send(msg)
 

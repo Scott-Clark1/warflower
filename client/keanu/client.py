@@ -28,7 +28,10 @@ class WarflowerClient:
     return json.loads(self._get("list"))["data"]
 
   def server_stats(self, serverid):
-    return json.loads(self._post(f"stats/{serverid}"))["data"]
+    try:
+      return json.loads(self._post(f"stats/{serverid}"))["data"]
+    except:
+      return None
 
   def start_server(self, serverid):
     return json.loads(self._post(f"start/{serverid}"))["ok"]
