@@ -1,6 +1,10 @@
 0:
   image: sknnr/enshrouded-dedicated-server:v2.0.4
   command: null
+  wrapper:
+    class: SteamServer
+    args:
+      port: 15637
   runtime_args:
     mem_limit: "32g"
     cpuset_cpus: "0-7"

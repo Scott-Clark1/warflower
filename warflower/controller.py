@@ -5,6 +5,7 @@ import yaml
 
 from warflower.containers import DockerManager
 from warflower.util import to_serverid
+from warflower.servers import get_server_by_name
 
 logger = logging.getLogger("webapp")
 
@@ -17,11 +18,26 @@ class ServerManager:
     self.load_configs()
     self._refresh_active_servers()
 
+  def _activate_server(self, serverid):
+      cfg = self.all_servers[serverid]
+
+      wrapper = cfg.get("wrapper", {})
+
+      default_args = {"host" : "localhost", "port" : -1}
+
+      w_class = wrapper.get("class", "DummyServer")
+      w_args = wrapper.get("args", {})
+      w_args = {**default_args, **w_args}
+
+      self.active_servers[serverid] = {
+        "server" : get_server_by_name(w_class)(serverid, **w_args)
+      }
+
   def _refresh_active_servers(self):
     self.active_servers = {}
     for s in self.docker_mgmt.list():
       if s["name"] in self.all_servers:
-        self.active_servers[s["name"]] = {}
+        self._activate_server(s["name"])
 
   def load_configs(self):
     currdir = os.path.dirname(__file__)
@@ -47,9 +63,17 @@ class ServerManager:
     self._refresh_active_servers()
     for serv in servers:
       if serv in self.active_servers:
-        res[serv] = 1
+        serverobj = self.active_servers[serv]["server"]
+        res[serv] = {
+          "playercount" : serverobj.playercount(),
+          "maxplayers" : serverobj.maxplayers(),
+          "servername" : serverobj.servername(),
+          "online" : True
+        }
       else:
-        res[serv] = 0
+        res[serv] = {
+          "online" : False
+        }
     return res
 
   def list_games(self):
@@ -60,12 +84,11 @@ class ServerManager:
 
   def start_server(self, serverid, rt_args={}):
     self.load_configs()
+    self._activate_server(serverid)
+
 
     cfg = self.all_servers[serverid]
-
     rt_args = {**cfg["runtime_args"]} # , **rt_args}
-    self.active_servers[serverid] = {}
-
     logger.info(f"Launching {serverid} with these settings:")
     logger.info(f"\t{cfg['image']}, {cfg['command']}, {serverid}")
     logger.info(f"\t{rt_args}")

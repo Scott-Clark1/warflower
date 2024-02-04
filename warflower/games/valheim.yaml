@@ -1,6 +1,10 @@
 0:
   image: mbround18/valheim:latest
   command: null
+  wrapper:
+    class: SteamServer
+    args:
+      port: 2457
   runtime_args:
     mem_limit: "8g"
     cpuset_cpus: "0-1"
@@ -14,7 +18,7 @@
       WORLD: "vikecord"
       PASSWORD: "vikey"
       TZ: America/Chicago
-      PUBLIC: 0
+      PUBLIC: 1
       UPDATE_ON_STARTUP: 1
       AUTO_UPDATE: 1
       AUTO_UPDATE_SCHEDULE: "0 1 * * *"
