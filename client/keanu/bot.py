@@ -44,7 +44,7 @@ async def on_message(message):
     # LIST GAMES
     if cmd == "list" or cmd == "status":
       if len(terms) < 3 or terms[2] == "configs":
-        msg = "Here are your available server configurations:\n```diff"
+        msg = "Here are your available server configurations:\n```css"
         cfgs = warflower_client.list_configs()
         for c in sorted(cfgs, key=lambda x: not cfgs[x]["online"]):
           if cfgs[c]["online"]:
@@ -53,7 +53,7 @@ async def on_message(message):
             maxplayers= cfgs[c]['maxplayers']
             msg += f"\n({playercount:3} / {maxplayers:3}) {servername} [{c}]"
           else:
-            msg += f"\n- [{c}]"
+            msg += f"\nOFFLINE - [{c}]"
         msg += "```"
       elif terms[2] == "games":
         msg = "Here are your available games: ```"
