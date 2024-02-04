@@ -61,15 +61,14 @@ class ServerManager:
   def start_server(self, serverid, rt_args={}):
     self.load_configs()
 
-    logger.info(f"Launching {serverid} with these rtargs:")
     cfg = self.all_servers[serverid]
 
     rt_args = {**cfg["runtime_args"]} # , **rt_args}
     self.active_servers[serverid] = {}
 
-    logger.info(f"Launching {serverid} with these rtargs:")
-    logger.info(f"{cfg['image']}, {cfg['command']}, {serverid}")
-    logger.info(f"{rt_args}")
+    logger.info(f"Launching {serverid} with these settings:")
+    logger.info(f"\t{cfg['image']}, {cfg['command']}, {serverid}")
+    logger.info(f"\t{rt_args}")
     return self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
   
   def server_stats(self, serverid):
