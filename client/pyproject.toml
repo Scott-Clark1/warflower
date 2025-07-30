@@ -3,7 +3,6 @@ name = "keanu"
 version = "0.1.0"
 description = "Discord client for warflower"
 authors = ["Scott Clark <scott@scottclark.ai>"]
-license = "GPL"
 readme = "README.md"
 
 [tool.poetry.dependencies]
