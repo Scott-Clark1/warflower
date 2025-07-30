@@ -1,22 +1,21 @@
-[tool.poetry]
+[project]
 name = "warflower"
 version = "0.1.0"
 description = "Dedi server mgmt"
-authors = ["scott"]
-license = "GPL"
+authors = [{ name = "scott" }]
+requires-python = "~=3.8"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-docker = "^7.0.0"
-pyyaml = "^6.0.1"
-flask = "^3.0.1"
-flask-httpauth = "^4.8.0"
-setuptools = "59.5.0"
-python-dotenv = "^1.0.1"
-discord-py = "^2.3.2"
-
+license = "GPL"
+dependencies = [
+    "docker>=7.0.0,<8",
+    "pyyaml>=6.0.1,<7",
+    "flask>=3.0.1,<4",
+    "flask-httpauth>=4.8.0,<5",
+    "setuptools==59.5.0",
+    "python-dotenv>=1.0.1,<2",
+    "discord-py>=2.3.2,<3",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
