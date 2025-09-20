@@ -63,11 +63,11 @@ class ServerManager:
     self._refresh_active_servers()
     for serv in servers:
       if serv in self.active_servers:
-        serverobj = self.active_servers[serv]["server"]
+        serverinfo = self.active_servers[serv]["server"]._load_info()
         res[serv] = {
-          "playercount" : serverobj.playercount(),
-          "maxplayers" : serverobj.maxplayers(),
-          "servername" : serverobj.servername(),
+          "playercount" : serverinfo["players"],
+          "maxplayers" : serverinfo["max_players"],
+          "servername" : serverinfo["name"],
           "online" : True
         }
       else:
@@ -92,7 +92,9 @@ class ServerManager:
     logger.info(f"Launching {serverid} with these settings:")
     logger.info(f"\t{cfg['image']}, {cfg['command']}, {serverid}")
     logger.info(f"\t{rt_args}")
-    return self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
+    res = self.docker_mgmt.start(cfg["image"], cfg["command"], serverid, **rt_args)
+    logger.info(f"SERVERSTART {res}")
+    return res
   
   def server_stats(self, serverid):
     self.load_configs()

@@ -1,5 +1,7 @@
 import docker
+import logging
 
+logger = logging.getLogger("webapp")
 
 class DockerManager:
   def __init__(self):
@@ -36,7 +38,8 @@ class DockerManager:
   def start(self, image, command, name, **kwargs):
     try:
       self.client.containers.run(image, command, name=name, detach=True, **kwargs)
-    except:
+    except Exception as e:
+      logger.error(e)
       return False
 
     return True

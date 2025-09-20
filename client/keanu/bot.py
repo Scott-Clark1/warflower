@@ -7,7 +7,7 @@ import discord
 from keanu.client import WarflowerClient
 
 load_dotenv()
-handler = logging.FileHandler(filename='/home/warflower/logs/discord.log', encoding='utf-8', mode='w+')
+handler = logging.FileHandler(filename='/home/ubuntu/warflower/logs/discord.log', encoding='utf-8', mode='w+')
 logger = logging.getLogger('discord')
 
 admins = os.environ["ADMINS"].split(',')
@@ -32,7 +32,7 @@ async def on_message(message):
   message_str = message.content.lower()
   if message_str.startswith('keanu'):
     author = message.author.name
-    logger.info(f"REQUEST DETECTED FROM {author}")
+    logger.error(f"REQUEST DETECTED FROM {author}")
     if author not in admins:
       return await message.channel.send(f"Permissions not found for {author}")
 

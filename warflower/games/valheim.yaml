@@ -7,7 +7,7 @@
       port: 2457
   runtime_args:
     mem_limit: "8g"
-    cpuset_cpus: "0-1"
+    cpuset_cpus: "0"
     ports:
       2456/udp: 2456
       2457/udp: 2457
@@ -17,7 +17,8 @@
       NAME: "WhoUpVallinTheyHeim"
       WORLD: "vikecord"
       PASSWORD: "vikey"
-      TZ: America/Chicago
+      TZ: "America/Chicago"
+      TYPE: "BepInEx"
       PUBLIC: 1
       UPDATE_ON_STARTUP: 1
       AUTO_UPDATE: 1
@@ -29,6 +30,14 @@
       AUTO_BACKUP_ON_UPDATE: 1
       AUTO_BACKUP_ON_SHUTDOWN: 1
       MODIFIERS: "portals=casual,deathpenalty=veryeasy"
+      TYPE: "BepInEx"
+      MODS: "cjayride-InstantMonsterLootDrop-0.6.0
+            GemHunter1-FastTeleport-1.1.0
+            Advize-PlantEverything-1.19.1
+            Advize-PlantEasily-2.0.3
+            ValheimModding-Jotunn-2.26.0
+            SpikeHimself-XPortal-1.2.5
+            "
     volumes:
-    - /home/warflower/games/valheim/server_0/worldsaves:/home/steam/.config/unity3d/IronGate/Valheim # TODO not good 
-    - /home/warflower/games/valheim/server_0/valheim-data:/home/steam/valheim
+    - /home/ubuntu/warflower/savedata/valheim_0/world:/home/steam/.config/unity3d/IronGate/Valheim # TODO not good 
+    - /home/ubuntu/warflower/savedata/valheim_0/valheim-data:/home/steam/valheim

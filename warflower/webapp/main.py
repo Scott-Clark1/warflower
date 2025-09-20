@@ -10,7 +10,7 @@ from warflower.controller import ServerManager
 
 app = Flask("webapp")
 
-file_handler = logging.FileHandler('/home/warflower/logs/flask.log', encoding='utf-8', mode='w+')
+file_handler = logging.FileHandler('/home/ubuntu/warflower/logs/flask.log', encoding='utf-8', mode='w+')
 file_handler.setLevel(logging.INFO)
 app.logger.addHandler(file_handler)
 app.logger.setLevel(logging.INFO)
@@ -51,6 +51,7 @@ def list_configs():
 def start_server(serverid):
   res = MGMT.start_server(serverid)
   if res:
+    app.logger.info(res)
     return jsonify({"status" : 200, "ok" : True})
   return jsonify({"status" : 500, "ok" : False})
 

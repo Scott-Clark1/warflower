@@ -47,7 +47,9 @@ class SteamServer(GameServer):
     logger.info(info)
   
   def _load_info(self):
-    info = {"players" : self.player_count, "max_players" : self.max_players, "name" : self.server_name}
+    info = {"players" : -1,
+        "max_players" : -1,
+        "name" : self.server_name}
     try:
       info = gs.a2s_info(self.serveraddr)
       self.info = info
